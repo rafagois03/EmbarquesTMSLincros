@@ -18,8 +18,8 @@ st.set_page_config(
 st.title("🚚 Criador de Embarques em Massa - TMS Lincros")
 st.write(
     """
-    **Desenvolvedor:** Thiago Nunes e Rafael Góis  
-    **Descrição:** Com esta aplicação você será capaz de criar embarques de *devolução* em massa no TMS Lincros, a partir de dados em uma planilha Excel.
+    **Desenvolvedores:** Thiago Nunes e Rafael Góis  
+    **Descrição:** Com esta aplicação você será capaz de criar embarques de *devolução* em massa no TMS Lincros a partir de dados em uma planilha Excel.
     """
 )
 # =======================
@@ -343,6 +343,7 @@ if ARQUIVO_EXCEL is not None:
                 file_name="EMBARQUES_GERADOS_TMS.xlsx",
                 mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
             )
+
 
 
 
