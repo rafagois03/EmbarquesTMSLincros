@@ -57,12 +57,12 @@ st.download_button(
 # =======================
 
 required_columns = {
-    "Protocolo", "CNPJ Unidade", "Calcular Carga", "Agrupar Conhecimentos",
-    "CEP Origem", "CEP Destino", "Data Embarque", "Remetente CNPJ", "Remetente Nome",
-    "Destinatário CNPJ", "Destinatário Nome", "Transportadora CNPJ", "Transportadora Nome",
-    "CNPJ Emissor", "Nota Fiscal", "Série NF", "Documento Chave Acesso",
-    "Pedido Série", "Pedido Número", "Motorista Documento", "Motorista Nome",
-    "Motorista Tipo Documento", "Observação", "Identificador", "Embarque"
+    "protocolo", "cnpj unidade", "calcular carga", "agrupar conhecimentos",
+    "cep origem", "cep destino", "data embarque", "remetente cnpj", "remetente nome",
+    "destinatário cnpj", "destinatário nome", "transportadora cnpj", "transportadora nome",
+    "cnpj emissor", "nota fiscal", "série nf", "documento chave acesso",
+    "motorista documento", "motorista nome", "motorista tipo documento", "observação",
+    "identificador", "embarque"
     }
 
 ARQUIVO_EXCEL = st.file_uploader(
@@ -71,14 +71,14 @@ ARQUIVO_EXCEL = st.file_uploader(
 )
 
 if ARQUIVO_EXCEL is not None:
-    df = pd.read_excel(ARQUIVO_EXCEL, engine="openpyxl", header=None)
+    df = pd.read_excel(ARQUIVO_EXCEL, engine="openpyxl")
 # novo trecho imprimir colunas
     st.write("🔍 **Colunas detectadas pelo pandas (ANTES de atribuir nomes):**")
     st.code(list(df.columns))
     st.write("Valores únicos da primeira linha (linha 0 do DataFrame):")
     st.code(df.iloc[0].tolist() if len(df) > 0 else "Arquivo vazio")
     
-    df.columns = df.columns.astype(str).str.lower().str.strip()
+    df.columns = df.columns.str.strip().str.lower()  #deixando cabeçalho encontrado com letra minúscula
     
 
     # Verifica quais colunas estão faltando
@@ -321,6 +321,7 @@ if ARQUIVO_EXCEL is not None:
                 file_name="EMBARQUES_GERADOS_TMS.xlsx",
                 mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
             )
+
 
 
 
