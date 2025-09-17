@@ -26,6 +26,15 @@ st.write(
 # DOWNLOAD TEMPLATE
 # =======================
 
+required_columns = {
+    "Protocolo", "CNPJ Unidade", "Calcular Carga", "Agrupar Conhecimentos",
+    "CEP Origem", "CEP Destino", "Data Embarque", "Remetente CNPJ", "Remetente Nome",
+    "Destinatário CNPJ", "Destinatário Nome", "Transportadora CNPJ", "Transportadora Nome",
+    "CNPJ Emissor", "Nota Fiscal", "Série NF", "Documento Chave Acesso",
+    "Pedido Série", "Pedido Número", "Motorista Documento", "Motorista Nome",
+    "Motorista Tipo Documento", "Observação", "Identificador", "Embarque"
+    }
+
 st.write("📥 **Não sabe como montar o arquivo?** Baixe o modelo abaixo e preencha:")
 
 # Cria um modelo vazio com as colunas obrigatórias
@@ -56,15 +65,6 @@ ARQUIVO_EXCEL = st.file_uploader(
 if ARQUIVO_EXCEL is not None:
     df = pd.read_excel(ARQUIVO_EXCEL, engine="openpyxl")
     df.columns = df.columns.str.lower().str.strip()
-
-    required_columns = {
-    "Protocolo", "CNPJ Unidade", "Calcular Carga", "Agrupar Conhecimentos",
-    "CEP Origem", "CEP Destino", "Data Embarque", "Remetente CNPJ", "Remetente Nome",
-    "Destinatário CNPJ", "Destinatário Nome", "Transportadora CNPJ", "Transportadora Nome",
-    "CNPJ Emissor", "Nota Fiscal", "Série NF", "Documento Chave Acesso",
-    "Pedido Série", "Pedido Número", "Motorista Documento", "Motorista Nome",
-    "Motorista Tipo Documento", "Observação", "Identificador", "Embarque"
-    }
 
     # Verifica quais colunas estão faltando
     missing_columns = required_columns - set(df.columns)
@@ -305,4 +305,5 @@ if ARQUIVO_EXCEL is not None:
                 file_name="EMBARQUES_GERADOS_TMS.xlsx",
                 mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
             )
+
 
