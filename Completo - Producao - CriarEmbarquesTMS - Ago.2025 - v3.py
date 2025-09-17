@@ -15,7 +15,7 @@ st.set_page_config(
     layout="wide"
 )
 
-st.title("🚚 Criador de Embarques em Massa - TMS - v1")
+st.title("🚚 Criador de Embarques em Massa - TMS Lincros")
 st.write(
     """
     **Desenvolvedor:** Thiago Nunes e Rafael Góis  
@@ -96,9 +96,14 @@ if ARQUIVO_EXCEL is not None:
             # 1) LOGIN PARA OBTER TOKEN
             # =============================
             login_url = "https://ws-tms.lincros.com/api/auth/login"
+
+            if "lincros" not in st.secrets:
+                st.error("❌ Secrets não configurados. Configure em ⚙️ Settings > Secrets no Streamlit Cloud.")
+                st.stop()
+
             login_payload = {
-                "login": "thiagonunes910@hotmail.com",
-                "senha": "Lincros@25"
+                "login": st.secrets["lincros"]["login"],
+                "senha": st.secrets["lincros"]["senha"]
             }
             login_headers = {
                 "accept": "text/plain",
@@ -112,7 +117,7 @@ if ARQUIVO_EXCEL is not None:
                 st.error(f"❌ Falha no login: {resp.status_code} - {resp.text}")
                 st.stop()
 
-            token = "B43Xe6ZwE6vxjOG2LPOIJZ0Z0ktMg1xEQ8ZYnoU3I8"  # token fixo
+            token = st.secrets["lincros"]["token"]
             st.write("✅ Login realizado com sucesso!")
 
             data_hoje = datetime.now()
@@ -253,8 +258,8 @@ if ARQUIVO_EXCEL is not None:
                     "Content-Type": "application/json"
                 }
                 payload = {
-                    "login": "thiagonunes910@hotmail.com",
-                    "senha": "Lincros@25"
+                    "login": st.secrets["lincros"]["login"],
+                    "senha": st.secrets["lincros"]["senha"]
                 }
                 try:
                     resp = requests.post(url, json=payload, headers=headers)
@@ -323,6 +328,7 @@ if ARQUIVO_EXCEL is not None:
                 file_name="EMBARQUES_GERADOS_TMS.xlsx",
                 mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
             )
+
 
 
 
