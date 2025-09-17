@@ -72,12 +72,7 @@ ARQUIVO_EXCEL = st.file_uploader(
 
 if ARQUIVO_EXCEL is not None:
     df = pd.read_excel(ARQUIVO_EXCEL, engine="openpyxl")
-# novo trecho imprimir colunas
-    st.write("🔍 **Colunas detectadas pelo pandas (ANTES de atribuir nomes):**")
-    st.code(list(df.columns))
-    st.write("Valores únicos da primeira linha (linha 0 do DataFrame):")
-    st.code(df.iloc[0].tolist() if len(df) > 0 else "Arquivo vazio")
-    
+   
     df.columns = df.columns.str.strip().str.lower()  #deixando cabeçalho encontrado com letra minúscula
     
 
@@ -321,6 +316,7 @@ if ARQUIVO_EXCEL is not None:
                 file_name="EMBARQUES_GERADOS_TMS.xlsx",
                 mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
             )
+
 
 
 
