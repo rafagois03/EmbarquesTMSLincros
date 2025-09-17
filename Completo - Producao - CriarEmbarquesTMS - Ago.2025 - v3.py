@@ -324,8 +324,15 @@ if ARQUIVO_EXCEL is not None:
             st.balloons()  # 🎈 Aqui! Comemoramos o sucesso do código... deu trabalho demais bixo kkk!    
             st.markdown(
                 """
-                📌 **Acompanhe o processamento ou visualize as cargas no TMS:**
-                [👉 Acessar TMS - Lista de Importação de Embarques](https://generalmills-tms.lincros.com/default/cadastro/importacaoArquivo/listarImportacaoEmbarque.xhtml?s=1)
+                <div style="text-align: center; margin: 20px 0;">
+                    <a href="https://generalmills-tms.lincros.com/default/cadastro/importacaoArquivo/listarImportacaoEmbarque.xhtml?s=1" 
+                       target="_blank"
+                       style="display: inline-block; padding: 10px 20px; font-size: 16px; 
+                              color: white; background-color: #007BFF; text-decoration: none; 
+                              border-radius: 5px; font-weight: bold;">
+                        🚚 Acessar TMS para acompanhar as cargas
+                    </a>
+                </div>
                 """,
                 unsafe_allow_html=True
             )
@@ -336,6 +343,7 @@ if ARQUIVO_EXCEL is not None:
                 file_name="EMBARQUES_GERADOS_TMS.xlsx",
                 mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
             )
+
 
 
 
