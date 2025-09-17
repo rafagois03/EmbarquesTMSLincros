@@ -71,7 +71,7 @@ ARQUIVO_EXCEL = st.file_uploader(
 )
 
 if ARQUIVO_EXCEL is not None:
-    df = pd.read_excel(ARQUIVO_EXCEL, engine="openpyxl")
+    df = pd.read_excel(ARQUIVO_EXCEL, engine="openpyxl", header=none)
     df.columns = df.columns.str.lower().str.strip()
 
     # Verifica quais colunas estão faltando
@@ -79,6 +79,7 @@ if ARQUIVO_EXCEL is not None:
     
     if missing_columns:
         st.error(f"❌ Arquivo Excel está faltando as seguintes colunas obrigatórias:\n\n{', '.join(sorted(missing_columns))}")
+        st.write("💡 Dica: As colunas devem estar na ordem correta. Baixe o modelo para garantir compatibilidade.")
         st.stop()
 
     st.success("✅ Arquivo carregado com sucesso!")
@@ -313,6 +314,7 @@ if ARQUIVO_EXCEL is not None:
                 file_name="EMBARQUES_GERADOS_TMS.xlsx",
                 mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
             )
+
 
 
 
