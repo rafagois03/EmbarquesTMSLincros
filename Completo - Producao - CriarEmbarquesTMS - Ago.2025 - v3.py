@@ -224,21 +224,27 @@ if ARQUIVO_EXCEL is not None:
             # =============================
             # 3) BUSCAR OID EMBARQUE PELO PROTOCOLO
             # =============================
-            # Barra de progresso de 15 segundos
-            st.write("⏳ Aguardando processamento do servidor (15 segundos)...")
-            progress_bar = st.progress(0)
-            status_text = st.empty()
+           # Calcula o tempo total de espera: 7 segundos por embarque processado
+            total_embarques = len(linhas_processadas)  # <-- assumindo que você tem essa lista
+            tempo_total = max(5, total_embarques * 7)  # mínimo de 5s para evitar espera muito curta
             
-            for i in range(15):
-                time.sleep(1)
-                progress = (i + 1) / 15
-                progress_bar.progress(int(progress * 100))
-                status_text.text(f"Aguardando... {i + 1}/15 segundos")
+            if total_embarques > 0:
+                st.write(f"⏳ Aguardando processamento do servidor ({tempo_total} segundos)...")
+                progress_bar = st.progress(0)
+                status_text = st.empty()
             
-            status_text.text("✅ Tempo de espera concluído!")
-            time.sleep(0.5)  # pequena pausa visual
-            progress_bar.empty()  # opcional: remove a barra depois
-            status_text.empty()   # opcional: remove o texto depois
+                for i in range(tempo_total):
+                    time.sleep(1)
+                    progress = (i + 1) / tempo_total
+                    progress_bar.progress(int(progress * 100))
+                    status_text.text(f"Aguardando... {i + 1}/{tempo_total} segundos")
+            
+                status_text.text("✅ Tempo de espera concluído!")
+                time.sleep(0.5)
+                progress_bar.empty()
+                status_text.empty()
+            else:
+                st.info("ℹ️ Nenhum embarque criado — pulando espera.")
 
             def obter_token_busca():
                 url = "https://ws-tms.lincros.com/api/auth/login"
@@ -310,12 +316,14 @@ if ARQUIVO_EXCEL is not None:
                 df.to_excel(writer, sheet_name='BASE DE EMBARQUES', index=False)
 
             st.success("🎉 Embarque → Protocolo → Embarque ID → Concluído!")
+            st.balloons()  # 🎈 Aqui! Comemora o sucesso!    
             st.download_button(
                 label="📥 Baixar Excel Atualizado",
                 data=output.getvalue(),
                 file_name="EMBARQUES_GERADOS_TMS.xlsx",
                 mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
             )
+
 
 
 
