@@ -22,6 +22,27 @@ st.write(
     **Descrição:** Com esta aplicação você será capaz de criar embarques de *devolução* em massa no TMS Lincros, a partir de dados em uma planilha Excel.
     """
 )
+# =======================
+# DOWNLOAD TEMPLATE
+# =======================
+
+st.write("📥 **Não sabe como montar o arquivo?** Baixe o modelo abaixo e preencha:")
+
+# Cria um modelo vazio com as colunas obrigatórias
+modelo_df = pd.DataFrame(columns=list(required_columns))
+
+# Salva em memória
+output = io.BytesIO()
+with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
+    modelo_df.to_excel(writer, sheet_name='Modelo', index=False)
+
+st.download_button(
+    label="⬇️ Baixar Modelo de Planilha",
+    data=output.getvalue(),
+    file_name="MODELO_EMBARQUES_TMS.xlsx",
+    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+)
+
 
 # =======================
 # UPLOAD DA PLANILHA
@@ -37,16 +58,19 @@ if ARQUIVO_EXCEL is not None:
     df.columns = df.columns.str.lower().str.strip()
 
     required_columns = {
-        "Protocolo", "CNPJ Unidade", "Calcular Carga", "Agrupar Conhecimentos",
-        "CEP Origem", "CEP Destino", "Data Embarque", "Remetente CNPJ", "Remetente Nome",
-        "Destinatário CNPJ", "Destinatário Nome", "Transportadora CNPJ", "Transportadora Nome",
-        "CNPJ Emissor", "Nota Fiscal", "Série NF", "Documento Chave Acesso",
-        "Pedido Série", "Pedido Número", "Motorista Documento", "Motorista Nome",
-        "Motorista Tipo Documento", "Observação", "Identificador", "Embarque"
+    "Protocolo", "CNPJ Unidade", "Calcular Carga", "Agrupar Conhecimentos",
+    "CEP Origem", "CEP Destino", "Data Embarque", "Remetente CNPJ", "Remetente Nome",
+    "Destinatário CNPJ", "Destinatário Nome", "Transportadora CNPJ", "Transportadora Nome",
+    "CNPJ Emissor", "Nota Fiscal", "Série NF", "Documento Chave Acesso",
+    "Pedido Série", "Pedido Número", "Motorista Documento", "Motorista Nome",
+    "Motorista Tipo Documento", "Observação", "Identificador", "Embarque"
     }
 
-    if not required_columns.issubset(df.columns):
-        st.error(f"Arquivo faltando colunas obrigatórias: {required_columns}")
+    # Verifica quais colunas estão faltando
+    missing_columns = required_columns - set(df.columns)
+    
+    if missing_columns:
+        st.error(f"❌ Arquivo Excel está faltando as seguintes colunas obrigatórias:\n\n{', '.join(sorted(missing_columns))}")
         st.stop()
 
     st.success("✅ Arquivo carregado com sucesso!")
@@ -281,3 +305,4 @@ if ARQUIVO_EXCEL is not None:
                 file_name="EMBARQUES_GERADOS_TMS.xlsx",
                 mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
             )
+
