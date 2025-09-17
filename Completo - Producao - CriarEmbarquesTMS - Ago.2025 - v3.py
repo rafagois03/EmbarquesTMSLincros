@@ -72,7 +72,7 @@ ARQUIVO_EXCEL = st.file_uploader(
 
 if ARQUIVO_EXCEL is not None:
     df = pd.read_excel(ARQUIVO_EXCEL, engine="openpyxl", header=None)
-    df.columns = df.columns.str.lower().str.strip()
+    df.columns = df.columns.astype(str).str.lower().str.strip()
 
     # Verifica quais colunas estão faltando
     missing_columns = required_columns - set(df.columns)
@@ -314,6 +314,7 @@ if ARQUIVO_EXCEL is not None:
                 file_name="EMBARQUES_GERADOS_TMS.xlsx",
                 mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
             )
+
 
 
 
