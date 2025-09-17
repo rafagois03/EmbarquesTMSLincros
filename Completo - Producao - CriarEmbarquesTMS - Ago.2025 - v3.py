@@ -321,13 +321,22 @@ if ARQUIVO_EXCEL is not None:
                 df.to_excel(writer, sheet_name='BASE DE EMBARQUES', index=False)
 
             st.success("🎉 Embarque → Protocolo → Embarque ID → Concluído!")
-            st.balloons()  # 🎈 Aqui! Comemora o sucesso!    
+            st.balloons()  # 🎈 Aqui! Comemoramos o sucesso do código... deu trabalho demais bixo kkk!    
+            st.markdown(
+                """
+                📌 **Acompanhe o processamento ou visualize as cargas no TMS:**
+                [👉 Acessar TMS - Lista de Importação de Embarques](https://generalmills-tms.lincros.com/default/cadastro/importacaoArquivo/listarImportacaoEmbarque.xhtml?s=1)
+                """,
+                unsafe_allow_html=True
+            )
+            
             st.download_button(
                 label="📥 Baixar Excel Atualizado",
                 data=output.getvalue(),
                 file_name="EMBARQUES_GERADOS_TMS.xlsx",
                 mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
             )
+
 
 
 
