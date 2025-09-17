@@ -89,7 +89,7 @@ if ARQUIVO_EXCEL is not None:
     # =======================
     # BOTÃO PARA GERAR EMBARQUES
     # =======================
-    if st.button("🚀 Gerar Cargas"):
+    if st.button("🚀 Gerar Embarques de Devolução!"):
         with st.spinner("⏳ Executando... isso pode levar alguns minutos..."):
 
             # =============================
@@ -124,7 +124,7 @@ if ARQUIVO_EXCEL is not None:
             url_criar_embarque = "https://ws-tms.lincros.com/api/embarque/criarAsync"
 
             # Garantir colunas de controle
-            for col in ["Protocolo", "Embarque", "FreteSPOT"]:
+            for col in ["protocolo", "embarque", "fretespot"]:
                 if col not in df.columns:
                     df[col] = None
 
@@ -134,8 +134,8 @@ if ARQUIVO_EXCEL is not None:
             st.write("\n🔍 Analisando linhas para criar embarque...\n")
 
             for idx, row in df.iterrows():
-                protocolo = row["Protocolo"]
-                embarque = row["Embarque"]
+                protocolo = row["protocolo"]
+                embarque = row["embarque"]
 
                 if pd.notna(protocolo) or pd.notna(embarque):
                     st.write(f"🚫 Linha {idx + 2}: Já processada — pulando.")
@@ -145,7 +145,7 @@ if ARQUIVO_EXCEL is not None:
                 st.write(f"✅ Linha {idx + 2}: Criando embarque...")
 
                 try:
-                    chave_acesso = str(row["Documento Chave Acesso"]).strip()
+                    chave_acesso = str(row["documento chave acesso"]).strip()
                     if chave_acesso.lower() in ["nan", ""]:
                         chave_acesso = None
                 except:
@@ -153,29 +153,29 @@ if ARQUIVO_EXCEL is not None:
 
                 # Montar payload
                 embarque_data = {
-                    "cnpjUnidade": str(row["CNPJ Unidade"]).strip(),
+                    "cnpjUnidade": str(row["cnpj unidade"]).strip(),
                     "calcularcarga": False,
                     "agruparConhecimentos": True,
                     "remetente": {
-                        "cnpj": str(row["Remetente CNPJ"]).strip(),
+                        "cnpj": str(row["remetente cnpj"]).strip(),
                         "marcadores": ["DEVOLUCAO"]
                     },
                     "destinatario": {
-                        "cnpj": str(row["Destinatário CNPJ"]).strip(),
+                        "cnpj": str(row["destinatário cnpj"]).strip(),
                         "marcadores": ["DEVOLUCAO"]
                     },
                     "transportadora": {
-                        "cnpj": str(row["Transportadora CNPJ"]).strip(),
+                        "cnpj": str(row["transportadora cnpj"]).strip(),
                         "marcadores": ["DEVOLUCAO"]
                     },
-                    "cepOrigem": int(row["CEP Origem"]),
-                    "cepDestino": int(row["CEP Destino"]),
+                    "cepOrigem": int(row["cep origem"]),
+                    "cepDestino": int(row["cep destino"]),
                     "documentos": [
                         {
                             "tipoDocumento": 0,
-                            "cnpjEmissor": int(row["CNPJ Emissor"]),
-                            "numeroDocumento": int(row["Nota Fiscal"]),
-                            "serie": int(row["Série NF"]),
+                            "cnpjEmissor": int(row["cnpj emissor"]),
+                            "numeroDocumento": int(row["nota fiscal"]),
+                            "serie": int(row["série nf"]),
                             "chaveAcesso": chave_acesso,
                             "tipoConhecimento": 3,
                             "grupoVeiculo": "3517"
@@ -183,13 +183,13 @@ if ARQUIVO_EXCEL is not None:
                     ],
                     "marcadores": ["DEVOLUCAO"],
                     "grupoVeiculo": "3517",
-                    "observacao": str(row.get("Observação", "")).strip(),
-                    "identificador": str(row.get("Identificador", "")).strip(),
+                    "observacao": str(row.get("observação", "")).strip(),
+                    "identificador": str(row.get("identificador", "")).strip(),
                     "motoristas": [
                         {
-                            "documento": str(row.get("Motorista Documento", "")).strip(),
-                            "nome": str(row.get("Motorista Nome", "")).strip(),
-                            "tipoDocumento": int(row.get("Motorista Tipo Documento", 1))
+                            "documento": str(row.get("motorista documento", "")).strip(),
+                            "nome": str(row.get("motorista nome", "")).strip(),
+                            "tipoDocumento": int(row.get("motorista tipo documento", 1))
                         }
                     ]
                 }
@@ -211,7 +211,7 @@ if ARQUIVO_EXCEL is not None:
                     protocolos = response.json().get("protocolo", [])
                     if protocolos and len(protocolos) == len(embarques_json):
                         for i, idx in enumerate(linhas_processadas):
-                            df.at[idx, "Protocolo"] = protocolos[i]
+                            df.at[idx, "protocolo"] = protocolos[i]
                         st.write(f"✅ {len(protocolos)} protocolo(s) vinculados.")
                     else:
                         st.warning("⚠️ Número de protocolos não corresponde ao esperado.")
@@ -287,20 +287,20 @@ if ARQUIVO_EXCEL is not None:
 
             st.write("\n🔄 Buscando OID dos embarques...\n")
             for idx, row in df.iterrows():
-                if pd.isna(row["Protocolo"]) or not pd.isna(row["Embarque"]):
+                if pd.isna(row["protocolo"]) or not pd.isna(row["embarque"]):
                     continue
 
                 try:
-                    protocolo = int(row["Protocolo"])
+                    protocolo = int(row["protocolo"])
                     oid = buscar_oid(token_busca, protocolo)
                     if oid:
-                        df.at[idx, "Embarque"] = int(oid)
+                        df.at[idx, "embarque"] = int(oid)
                         st.write(f"✔️ Linha {idx + 2}: Embarque {oid} vinculado.")
                     else:
-                        df.at[idx, "Embarque"] = None
+                        df.at[idx, "embarque"] = None
                 except Exception as e:
                     st.error(f"❌ Erro ao processar linha {idx + 2}: {e}")
-                    df.at[idx, "Embarque"] = None
+                    df.at[idx, "embarque"] = None
 
             # =============================
             # 4) DOWNLOAD DO ARQUIVO ATUALIZADO
@@ -316,6 +316,7 @@ if ARQUIVO_EXCEL is not None:
                 file_name="EMBARQUES_GERADOS_TMS.xlsx",
                 mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
             )
+
 
 
 
