@@ -27,7 +27,7 @@ st.write(
 # =======================
 
 needed_columns = {
-    "Protocolo", "CNPJ Unidade", , "CEP Origem",
+    "Protocolo", "CNPJ Unidade", "CEP Origem",
     "CEP Destino", "Remetente CNPJ", "Destinatário CNPJ",
     "Transportadora CNPJ", "CNPJ Emissor", "Nota Fiscal",
     "Série NF", "Documento Chave Acesso","Observação", "Identificador", "Embarque", "Link TMS"}
@@ -339,6 +339,7 @@ if ARQUIVO_EXCEL is not None:
                 file_name="EMBARQUES_GERADOS_TMS.xlsx",
                 mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
             )
+
 
 
 
