@@ -181,15 +181,15 @@ if ARQUIVO_EXCEL is not None:
             
             #Tratamento CEP ############################################
             
-            cep_origem = str(row["cep origem"])  #define a coluna como uma nova variável dinâmica para cada linha
-            cep_origem =  ''.join(filter(str.isdigit, cep_origem))  #Remove qualquer caractere não numérico (pontos, traços, barras)
-            if len(cep_origem) < 8:          # Se tiver menos de 8 dígitos, completa com zeros à esquerda
-                        cep_origem = cep_origem.zfill(8)
-            
-            cep_destino = str(row["cep destino"])  #define a coluna como uma nova variável dinâmica para cada linha
-            cep_destino =  ''.join(filter(str.isdigit, cep_destino))  #Remove qualquer caractere não numérico (pontos, traços, barras)
-            if len(cep_destino) < 8:          # Se tiver menos de 8 dígitos, completa com zeros à esquerda
-                        cep_destino = cep_destino.zfill(8)
+                cep_origem = str(row["cep origem"])  #define a coluna como uma nova variável dinâmica para cada linha
+                cep_origem =  ''.join(filter(str.isdigit, cep_origem))  #Remove qualquer caractere não numérico (pontos, traços, barras)
+                if len(cep_origem) < 8:          # Se tiver menos de 8 dígitos, completa com zeros à esquerda
+                            cep_origem = cep_origem.zfill(8)
+                
+                cep_destino = str(row["cep destino"])  #define a coluna como uma nova variável dinâmica para cada linha
+                cep_destino =  ''.join(filter(str.isdigit, cep_destino))  #Remove qualquer caractere não numérico (pontos, traços, barras)
+                if len(cep_destino) < 8:          # Se tiver menos de 8 dígitos, completa com zeros à esquerda
+                            cep_destino = cep_destino.zfill(8)
                             
             ##########################################################
 
@@ -391,6 +391,7 @@ if ARQUIVO_EXCEL is not None:
                 file_name="EMBARQUES_GERADOS_TMS.xlsx",
                 mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
             )
+
 
 
 
