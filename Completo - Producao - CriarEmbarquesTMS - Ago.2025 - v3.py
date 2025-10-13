@@ -147,37 +147,37 @@ if ARQUIVO_EXCEL is not None:
                     continue
 
 
-            #Tratamento CNPJs ############################################
-            
-            cnpj_transportadora = str(row["transportadora cnpj"]).strip()  #define a coluna como uma nova variável dinâmica para cada linha
-            cnpj_transportadora =  ''.join(filter(str.isdigit, cnpj_transportadora))  #Remove qualquer caractere não numérico (pontos, traços, barras)
-            if len(cnpj_unidade) < 14:          # Se tiver menos de 14 dígitos, completa com zeros à esquerda
-                        cnpj_transportadora = cnpj_transportadora.zfill(14)
-            
-            
-            cnpj_destinatário = str(row["destinatário cnpj"]).strip()  #define a coluna como uma nova variável dinâmica para cada linha
-            cnpj_destinatário =  ''.join(filter(str.isdigit, cnpj_destinatário))  #Remove qualquer caractere não numérico (pontos, traços, barras)
-            if len(cnpj_destinatário) < 14:          # Se tiver menos de 14 dígitos, completa com zeros à esquerda
-                        cnpj_destinatário = cnpj_destinatário.zfill(14)
-            
-            
-            cnpj_unidade = str(row["cnpj unidade"]).strip()  #define a coluna como uma nova variável dinâmica para cada linha
-            cnpj_unidade =  ''.join(filter(str.isdigit, cnpj_unidade))  #Remove qualquer caractere não numérico (pontos, traços, barras)
-            if len(cnpj_unidade) < 14:          # Se tiver menos de 14 dígitos, completa com zeros à esquerda
-                        cnpj_unidade = cnpj_unidade.zfill(14)
-            
-            
-            cnpj_remetente = str(row["remetente cnpj"]).strip()  #define a coluna como uma nova variável dinâmica para cada linha
-            cnpj_remetente =  ''.join(filter(str.isdigit, cnpj_remetente))  #Remove qualquer caractere não numérico (pontos, traços, barras)
-            if len(cnpj_remetente) < 14:          # Se tiver menos de 14 dígitos, completa com zeros à esquerda
-                        cnpj_remetente = cnpj_remetente.zfill(14)
-            
-            
-            cnpj_emissor = str(row["cnpj emissor"]).strip()  #define a coluna como uma nova variável dinâmica para cada linha
-            cnpj_emissor =  ''.join(filter(str.isdigit, cnpj_emissor))  #Remove qualquer caractere não numérico (pontos, traços, barras)
-            if len(cnpj_emissor) < 14:          # Se tiver menos de 14 dígitos, completa com zeros à esquerda
-                        cnpj_emissor = cnpj_emissor.zfill(14)
-            
+                #Tratamento CNPJs ############################################
+                
+                cnpj_transportadora = str(row["transportadora cnpj"]).strip()  #define a coluna como uma nova variável dinâmica para cada linha
+                cnpj_transportadora =  ''.join(filter(str.isdigit, cnpj_transportadora))  #Remove qualquer caractere não numérico (pontos, traços, barras)
+                if len(cnpj_unidade) < 14:          # Se tiver menos de 14 dígitos, completa com zeros à esquerda
+                            cnpj_transportadora = cnpj_transportadora.zfill(14)
+                
+                
+                cnpj_destinatário = str(row["destinatário cnpj"]).strip()  #define a coluna como uma nova variável dinâmica para cada linha
+                cnpj_destinatário =  ''.join(filter(str.isdigit, cnpj_destinatário))  #Remove qualquer caractere não numérico (pontos, traços, barras)
+                if len(cnpj_destinatário) < 14:          # Se tiver menos de 14 dígitos, completa com zeros à esquerda
+                            cnpj_destinatário = cnpj_destinatário.zfill(14)
+                
+                
+                cnpj_unidade = str(row["cnpj unidade"]).strip()  #define a coluna como uma nova variável dinâmica para cada linha
+                cnpj_unidade =  ''.join(filter(str.isdigit, cnpj_unidade))  #Remove qualquer caractere não numérico (pontos, traços, barras)
+                if len(cnpj_unidade) < 14:          # Se tiver menos de 14 dígitos, completa com zeros à esquerda
+                            cnpj_unidade = cnpj_unidade.zfill(14)
+                
+                
+                cnpj_remetente = str(row["remetente cnpj"]).strip()  #define a coluna como uma nova variável dinâmica para cada linha
+                cnpj_remetente =  ''.join(filter(str.isdigit, cnpj_remetente))  #Remove qualquer caractere não numérico (pontos, traços, barras)
+                if len(cnpj_remetente) < 14:          # Se tiver menos de 14 dígitos, completa com zeros à esquerda
+                            cnpj_remetente = cnpj_remetente.zfill(14)
+                
+                
+                cnpj_emissor = str(row["cnpj emissor"]).strip()  #define a coluna como uma nova variável dinâmica para cada linha
+                cnpj_emissor =  ''.join(filter(str.isdigit, cnpj_emissor))  #Remove qualquer caractere não numérico (pontos, traços, barras)
+                if len(cnpj_emissor) < 14:          # Se tiver menos de 14 dígitos, completa com zeros à esquerda
+                            cnpj_emissor = cnpj_emissor.zfill(14)
+                
             
             #Tratamento CEP ############################################
             
@@ -391,6 +391,7 @@ if ARQUIVO_EXCEL is not None:
                 file_name="EMBARQUES_GERADOS_TMS.xlsx",
                 mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
             )
+
 
 
 
